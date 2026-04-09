@@ -1,5 +1,6 @@
 FROM ubuntu:22.04
 
+# Prevents annoying prompts during installation
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
@@ -9,12 +10,16 @@ RUN apt-get update && apt-get install -y \
     samtools \
     python3 \
     python3-pip \
-    default-jre \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY analysis/requirements.txt /tmp/
+# Professional touch: ensure pip is up to date
+RUN pip3 install --upgrade pip
+
+# Change this to match your project's folder structure
+COPY requirements.txt /tmp/ 
 RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
 
-WORKDIR /workspace
+WORKDIR /data
 
 CMD ["/bin/bash"]
