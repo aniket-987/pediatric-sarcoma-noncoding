@@ -13,10 +13,9 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Professional touch: ensure pip is up to date
 RUN pip3 install --upgrade pip
 
-# Change this to match your project's folder structure
+
 COPY requirements.txt /tmp/ 
 RUN pip3 install --no-cache-dir -r /tmp/requirements.txt
 
