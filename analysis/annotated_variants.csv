@@ -1,0 +1,7 @@
+phyloP_score,enhancer_activity_score,distance_to_tss,is_pathogenic
+0.95,0.88,150,1
+0.10,0.02,45000,0
+0.82,0.91,300,1
+0.20,0.15,12000,0
+0.89,0.94,50,1
+0.05,0.01,80000,0

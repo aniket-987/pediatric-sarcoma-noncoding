@@ -32,7 +32,7 @@ def train_prioritization_model(X, y):
 
 if __name__ == "__main__":
     try:
-        X, y = load_and_prep_data("annotated_variants.csv")
+        X, y = load_and_prep_data("analysis/annotated_variants.csv")
         trained_model = train_prioritization_model(X, y)
     except FileNotFoundError:
         print("Error: 'annotated_variants.csv' not found.")
