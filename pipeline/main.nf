@@ -57,7 +57,7 @@ process PRIORITIZE_VARIANTS {
 
     input:
     tuple val(sample_id), path(bam), path(bai)
-    path variant_csv // This is the file you just added!
+    path variant_csv
 
     output:
     path "prioritized_results.csv"
