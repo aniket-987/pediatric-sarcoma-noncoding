@@ -50,3 +50,32 @@ workflow {
     ALIGN_READS(read_pairs_ch, genome_ch)
     SORT_BAM(ALIGN_READS.out)
 }
+
+process PRIORITIZE_VARIANTS {
+    tag "ML on $sample_id"
+    publishDir "${params.outdir}/predictions", mode: 'copy'
+
+    input:
+    tuple val(sample_id), path(bam), path(bai)
+    path variant_csv // This is the file you just added!
+
+    output:
+    path "prioritized_results.csv"
+
+    script:
+    """
+    python ${projectDir}/analysis/variant_prioritization.py
+    """
+}
+
+workflow {
+    read_pairs_ch = Channel.fromFilePairs(params.reads, checkIfExists: true)
+    genome_ch = file(params.genome)
+    mock_data_ch = file("${projectDir}/analysis/annotated_variants.csv")
+
+    ALIGN_READS(read_pairs_ch, genome_ch)
+    SORT_BAM(ALIGN_READS.out)
+    
+    // Connect the output of SORT_BAM and your CSV to the ML script
+    PRIORITIZE_VARIANTS(SORT_BAM.out, mock_data_ch)
+}
